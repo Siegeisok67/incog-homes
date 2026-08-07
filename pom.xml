@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.incogdev</groupId>
+    <artifactId>incog-homes</artifactId>
+    <version>1.0.0</version>
+    <packaging>jar</packaging>
+
+    <name>Incog-Homes</name>
+    <description>Homes plugin for the Incog server network. Built for Purpur 26.2.</description>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.release>21</maven.compiler.release>
+    </properties>
+
+    <!--
+        NOTE: This project depends on the Purpur API, which is published to
+        PurpurMC's own Maven repository (not Maven Central). The build box
+        used to generate this project does not have network access to that
+        repository, so the jar could not be compiled/verified here. Build
+        this locally or in CI (e.g. GitHub Actions) with:
+
+            mvn clean package
+
+        The version below uses a Maven version RANGE ("[26.2.build,)" =
+        "26.2.build or anything newer"), which is the Maven equivalent of
+        Gradle's "26.2.build.+" shorthand — Maven doesn't understand the
+        "+" syntax, so don't swap it back to that or resolution will fail
+        with "Could not find artifact ... 26.2.build.+".
+
+        The Purpur server itself requires Java 25 to run (Minecraft 26.2 /
+        Purpur 26.2), but the plugin is compiled targeting release 21
+        bytecode, which runs fine on the Java 25 JVM.
+    -->
+    <repositories>
+        <repository>
+            <id>purpurmc-snapshots</id>
+            <url>https://repo.purpurmc.org/snapshots</url>
+        </repository>
+        <repository>
+            <id>papermc</id>
+            <url>https://repo.papermc.io/repository/maven-public/</url>
+        </repository>
+    </repositories>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.purpurmc.purpur</groupId>
+            <artifactId>purpur-api</artifactId>
+            <version>[26.2.build,)</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <finalName>${project.name}-${project.version}</finalName>
+        <defaultGoal>clean package</defaultGoal>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.13.0</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>3.3.1</version>
+                <configuration>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

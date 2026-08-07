@@ -1,0 +1,58 @@
+name: Incog-Homes
+version: '1.0.0'
+main: com.incogdev.homes.IncogHomes
+api-version: '26.2'
+author: Siegeisok67
+description: Homes plugin for the Incog server network — sethome/home/delhome with danger checks, cooldowns, per-home logging, and admin controls.
+
+commands:
+  sethome:
+    description: Set a home at your current location.
+    usage: /sethome [name]
+    permission: incoghomes.sethome
+  forcesethome:
+    description: Set a home at your current location, ignoring danger checks.
+    usage: /forcesethome [name]
+    permission: incoghomes.sethome.force
+  home:
+    description: Teleport to one of your homes.
+    usage: /home [name]
+    permission: incoghomes.home
+  delhome:
+    description: Delete one of your homes.
+    usage: /delhome <name>
+    permission: incoghomes.delhome
+  homes:
+    description: List your homes.
+    usage: /homes
+    permission: incoghomes.home
+  homeadmin:
+    description: Admin controls for other players' homes.
+    usage: /homeadmin <revoke|list> ...
+    permission: incoghomes.admin
+
+permissions:
+  incoghomes.sethome:
+    description: Allows setting a home in a safe location.
+    default: true
+  incoghomes.sethome.force:
+    description: Allows setting a home while ignoring danger checks.
+    default: op
+  incoghomes.home:
+    description: Allows teleporting to and listing your own homes.
+    default: true
+  incoghomes.delhome:
+    description: Allows deleting your own homes.
+    default: true
+  incoghomes.admin:
+    description: Allows managing other players' homes.
+    default: op
+  incoghomes.bypass.cooldown:
+    description: Bypasses the /home cooldown.
+    default: op
+  incoghomes.bypass.limit:
+    description: Bypasses the home limit entirely.
+    default: op
+  incoghomes.bypass.danger:
+    description: Treated as if danger checks always pass, even on /sethome.
+    default: false

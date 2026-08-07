@@ -1,0 +1,110 @@
+# =========================================================
+#  Incog-Homes configuration
+# =========================================================
+
+home:
+  # Default name used when a player runs /sethome or /home with no name given.
+  default-home-name: "home"
+
+  # Seconds a player must wait between successful /home uses.
+  # Players with incoghomes.bypass.cooldown ignore this entirely.
+  cooldown-seconds: 60
+
+  # Default max number of homes a player can have.
+  default-limit: 3
+
+  # Permission-based overrides for the home limit. The HIGHEST matching
+  # value the player has permission for is used. Players with
+  # incoghomes.bypass.limit ignore limits entirely.
+  permission-limits:
+    incoghomes.limit.vip: 5
+    incoghomes.limit.mvp: 10
+
+  # If true, re-running /sethome on an existing home name requires the
+  # player to confirm by running the exact same command again within
+  # confirm-overwrite-seconds.
+  confirm-overwrite: true
+  confirm-overwrite-seconds: 15
+
+  # Seconds of warmup before a /home teleport actually happens.
+  # Set to 0 to teleport instantly.
+  teleport-warmup-seconds: 3
+
+  # Cancel a pending /home warmup if the player moves (walking counts,
+  # looking around does not) or takes damage.
+  cancel-warmup-on-move: true
+  cancel-warmup-on-damage: true
+
+  # Worlds players are not allowed to set/use homes in. Leave empty to
+  # allow every world.
+  disabled-worlds: []
+
+# Anything checked here can block a plain /sethome. /forcesethome (with
+# incoghomes.sethome.force) skips all of it. Players with
+# incoghomes.bypass.danger always pass these checks too.
+danger-checks:
+  enabled: true
+
+  # Blocks setting a home while standing in lava or actively on fire.
+  block-lava-and-fire: true
+
+  # Blocks setting a home if there's no solid ground within this many
+  # blocks below the player (i.e. they'd fall/take damage on teleport
+  # back to it). Set to 0 to disable this check.
+  fall-check-distance: 5
+
+  # Blocks setting a home while a hostile mob is within this many blocks.
+  # Set to 0 to disable.
+  hostile-mob-radius: 6
+
+  # Blocks setting a home for this many seconds after taking damage from
+  # another entity (a basic "combat tag"). Set to 0 to disable.
+  combat-tag-seconds: 10
+
+logging:
+  # Timestamp pattern used in every log line (java.time.format.DateTimeFormatter).
+  timestamp-format: "yyyy-MM-dd HH:mm:ss"
+
+  # Every log line is also echoed to console, per plugin requirements.
+  # This only controls whether it's ALSO written to the log files below.
+  write-to-files: true
+
+  # File under the plugin's data folder that records set-home/force-set-
+  # home/delete-home/teleport/revoke actions.
+  actions-log-file: "logs/actions.log"
+
+  # Separate running file that lists every home currently set on the
+  # server (player, uuid, home name, location, and when it was created).
+  # A fresh line is appended whenever a home is created, force-created,
+  # or overwritten; the corresponding old line is removed when a home is
+  # deleted or revoked.
+  homelist-log-file: "logs/homelist.log"
+
+messages:
+  prefix: "&8[&bIncog-Homes&8] &r"
+  no-permission: "&cYou don't have permission to do that."
+  home-set: "&aHome '&f%name%&a' has been set."
+  home-force-set: "&aHome '&f%name%&a' has been force-set, ignoring danger checks."
+  home-deleted: "&aHome '&f%name%&a' has been deleted."
+  home-not-found: "&cYou don't have a home named '&f%name%&c'."
+  home-no-homes: "&cYou don't have any homes yet. Use &f/sethome&c to make one."
+  home-limit-reached: "&cYou've reached your home limit (&f%limit%&c). Delete one with &f/delhome&c first."
+  home-cooldown: "&cYou need to wait &f%seconds%s&c before using /home again."
+  home-teleporting: "&7Teleporting to '&f%name%&7' in &f%seconds%s&7..."
+  home-teleport-cancelled-move: "&cTeleport cancelled — you moved."
+  home-teleport-cancelled-damage: "&cTeleport cancelled — you took damage."
+  home-teleported: "&aTeleported to '&f%name%&a'."
+  confirm-overwrite: "&eA home named '&f%name%&e' already exists. Run the command again within &f%seconds%s&e to overwrite it."
+  danger-lava-fire: "&cYou can't set a home while in lava or on fire. Use &f/forcesethome&c to override."
+  danger-fall: "&cThere's no solid ground nearby — you'd fall if you teleported back here. Use &f/forcesethome&c to override."
+  danger-mobs: "&cThere's a hostile mob too close by. Use &f/forcesethome&c to override."
+  danger-combat: "&cYou were recently in combat. Use &f/forcesethome&c to override."
+  world-disabled: "&cHomes can't be set or used in this world."
+  admin-revoke-usage: "&cUsage: /homeadmin revoke <player> <homename>"
+  admin-list-usage: "&cUsage: /homeadmin list <player>"
+  admin-player-no-homes: "&c%player% doesn't have any homes."
+  admin-home-not-found: "&c%player% doesn't have a home named '&f%name%&c'."
+  admin-revoke-location: "&7Home '&f%name%&7' for &f%player%&7 is located at &f%location%&7."
+  admin-revoke-confirmed: "&aRevoked home '&f%name%&a' from &f%player%&a."
+  admin-list-header: "&7Homes for &f%player%&7:"
+  admin-list-entry: "&7 - &f%name%&7: &f%location% &7(set %timestamp%)"
